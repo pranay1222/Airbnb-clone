@@ -1,0 +1,95 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <div class="row">
+        <div class="col-6 offset-2">
+            <h1>Create Your New Listing</h1>
+
+            <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data" >
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Title</label>
+                    <input name="listing[title]" placeholder="Add a catchy title" class="form-control" required>
+
+                    <div class="invalid-feedback">
+                        Please provide a title for your listing.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Description</label>
+                    <textarea name="listing[description]"  class="form-control" required></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a Description for your listing.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Upload Listing Image </label>
+                    <input 
+                    name="listing[image]"  
+                    class="form-control" 
+                    placeholder="image URL" 
+                    type="file">
+                    <div class="invalid-feedback">
+                        Please provide a image URL for your listing.
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="formFile" class="form-label">Price</label>
+                        <input name="listing[price]" type="number" class="form-control" placeholder="1500" required>
+                        <div class="invalid-feedback">
+                            Please provide a Price for your listing.
+                        </div>
+                        <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="formFile" class="form-label">Country</label>
+                        <input name="listing[country]" placeholder="Japan" class="form-control" required>
+                        <div class="invalid-feedback">
+                            Please provide a Country name for your listing.
+                        </div>
+                        <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Location</label>
+                    <input name="listing[location]" placeholder="Yosihama, Husyung"  class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please provide a location for your listing.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Category</label>
+                    <input name="listing[category]" placeholder="Camping,Mountain.."  class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please provide a location for your listing.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good.
+                    </div>
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-danger">Submit</button>
+                <br>
+            </form>
+        
+        </div>
+
+    </div>    
+</body>
