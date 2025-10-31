@@ -83,6 +83,9 @@ app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter)
 app.use("/",userRouter);
 
+app.get("/",(req,res)=>{
+    console.log("root");
+});
 
 // app.get("/demo",async(req,res)=>{
 //     const fakeUser=new User({
