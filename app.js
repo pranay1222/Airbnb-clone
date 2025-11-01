@@ -84,7 +84,7 @@ app.use("/listings/:id/reviews",reviewRouter)
 app.use("/",userRouter);
 
 app.get("/",(req,res)=>{
-    console.log("root");
+    res.render("/listings");
 });
 
 // app.get("/demo",async(req,res)=>{
