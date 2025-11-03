@@ -9,7 +9,7 @@ module.exports.signup=async (req,res)=>{
             if(err){
                 return next(err);
             }
-            req.flash("success","Welcome to Wanderlust");
+            req.flash("success","Welcome to Rove & Rest");
             res.redirect("/listings");
         })
     }catch(e){
@@ -19,7 +19,7 @@ module.exports.signup=async (req,res)=>{
 }
 
 module.exports.login=(req,res)=>{
-        req.flash("success","Welcome back to wanderlust!");
+        req.flash("success","Welcome back to Rove & Rest!");
     res.redirect(res.locals.redirectUrl || "/listings");
 }
 

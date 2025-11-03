@@ -10,14 +10,15 @@ const path=require("path");
 const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
 const ExpressError = require('./utils/ExpressError.js');
-const listingRouter=require("./routes/listing.js");
-const reviewRouter=require("./routes/review.js");
 const session=require("express-session");
 const MongoStore=require("connect-mongo");
 const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
+
+const listingRouter=require("./routes/listing.js");
+const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 
 app.set("view engine","ejs");
@@ -84,7 +85,7 @@ app.use("/listings/:id/reviews",reviewRouter)
 app.use("/",userRouter);
 
 app.get("/",(req,res)=>{
-    res.render("/listings");
+    res.redirect("/listings");
 });
 
 // app.get("/demo",async(req,res)=>{
