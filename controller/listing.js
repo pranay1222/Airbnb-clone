@@ -7,7 +7,9 @@ module.exports.index=async (req,res)=>{
         filter.category=category;
     }
 
-    const allListings=await Listing.find(filter);
+    const allListings=await Listing.find(filter)
+        .select("title price location image category")
+        .lean();
     res.render("listings/index.ejs",{allListings});
 }
 
@@ -24,7 +26,7 @@ module.exports.showListing=async (req,res)=>{
     .populate("owner");
     if(!listings){
         req.flash("error","Cannot find that listing!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     res.render("listings/show.ejs",{listings});
 }
@@ -32,7 +34,11 @@ module.exports.showListing=async (req,res)=>{
 module.exports.createlisting = async (req, res, next) => {
     // 1. Get location string from form
     const addressToGeocode = req.body.listing.location;
-    const myAPIKey = "05b1578700df43c3aab0e88d87df9aef"; // It's better to store this in a .env file
+    const myAPIKey = process.env.GEOAPIFY_KEY;
+    if (!myAPIKey) {
+        req.flash("error", "Geocoding service is not configured. Please contact the administrator.");
+        return res.redirect("/listings/new");
+    }
     const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(addressToGeocode)}&apiKey=${myAPIKey}`;
 
     // 2. Make the API call and wait for the result
@@ -48,7 +54,7 @@ module.exports.createlisting = async (req, res, next) => {
         // GeoJSON format requires [longitude, latitude]
         const lon = data.features[0].properties.lon;
         const lat = data.features[0].properties.lat;
-        newListing.geometry = { type: 'Point', coordinates: [lat, lon] };
+        newListing.geometry = { type: 'Point', coordinates: [lon, lat] };
     } else {
         // Optional: Handle cases where the location is not found
         console.log(`Could not find coordinates for: ${addressToGeocode}`);
@@ -63,8 +69,6 @@ module.exports.createlisting = async (req, res, next) => {
     let filename = req.file.filename;
     newListing.image = { url, filename };
     
-
-    console.log(req.body.listing);
     // 6. Save the complete listing to the database
     await newListing.save();
     
@@ -85,7 +89,7 @@ module.exports.editListing=async (req,res)=>{
 
 module.exports.updateListing=async (req,res)=>{
     let {id}=req.params;
-    let listing=await Listing.findByIdAndUpdate(id,{...req.body.listing});
+    let listing=await Listing.findByIdAndUpdate(id,{...req.body.listing},{new:true});
 
     if(typeof req.file!=='undefined'){
     let url=req.file.path;
