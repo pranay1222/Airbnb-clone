@@ -19,4 +19,6 @@ const reviewSchema=new Schema({
 
 })
 
+reviewSchema.index({ author: 1 });
+
 module.exports=mongoose.model("Review",reviewSchema); 
